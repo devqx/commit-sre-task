@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: argocd-server-http
+  namespace: argo-cd
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+
+spec:
+  rules:
+    - host: argocd.prod-commit-eks.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service:
+              name: argocd-server
+              port:
+                name: http

@@ -1,0 +1,26 @@
+controller:
+  metrics:
+    enabled: true
+  service:
+    external:
+      enabled: true
+    internal:
+      enabled: false
+    targetPorts:
+      http: http
+      https: http
+    annotations:
+      service.beta.kubernetes.io/aws-load-balancer-connection-idle-timeout: "60"
+      service.beta.kubernetes.io/aws-load-balancer-cross-load-balancing-enabled: "true"
+      service.beta.kubernetes.io/aws-load-balancer-ssl-cert: ${acm_ssl_cert_arn}
+      service.beta.kubernetes.io/aws-load-balancer-type: nlb
+      service.beta.kubernetes.io/aws-load-balancer-scheme: "internet-facing"
+
+config:
+  http-snippet: |
+    server {
+        listen 2443;
+        return 308 https://$host$request_uri;
+    }
+  proxy-real-ip-cidr: ${cidr_block}
+  use-forwarded-headers: true

@@ -1,0 +1,6 @@
+apiVersion: v2
+name: log-generator-helm-chart
+description: A Helm chart for log generation based on dynamic cron schedule
+type: application
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,53 @@
+---
+global:
+  domain: argocd.prod-commit-eks.com
+
+dex:
+  extraArgs:
+    - --disable-tls
+configs:
+  params:
+    server.insecure: true
+  cm:
+    exec.enabled: true
+    url: https://argocd.prod-commit-eks.com
+    resource.customizations: |
+      networking.k8s.io/Ingress:
+          health.lua: |
+              hs = {}
+              hs.status = "Healthy"
+              return hs
+    repositories:
+      charts:
+        url: https://github.com/devqx/commit-helm-charts-registry
+        name: apps-helm-chart
+        type: helm
+      apps-manifests:
+        url: https://github.com/devqx/argocd/apps
+        name: app-manifests
+        type: git
+    rbac:
+      policy.default: role:readonly
+      policy.csv: |
+        p, role:admin, exec, create, */*, allow
+        g, AWS_DevOps, role:admin
+    redis-ha:
+      enabled: true
+    controller:
+      replicas: 1
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: nginx
+        annotations:
+        nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        nginx.ingress.kubernetes.io/backend-protocol: "HTTP"
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+    repoServer:
+      autoscaling:
+        enabled: true
+        minReplicas: 2
+    applicationSet:
+      replicaCount: 2

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: helm-charts
+  namespace: argo-cd
+  labels:
+    argocd.argoproj.io/secret-type: repository
+stringData:
+  url: "https://devqx.github.io/commit-helm-charts"
+  type: "helm"
+  username: ${git_username}
+  password: ${git_password}

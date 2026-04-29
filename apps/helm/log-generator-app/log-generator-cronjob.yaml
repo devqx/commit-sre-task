@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: { { .Values.fullnameOverride } }
+  namespace: { { .Values.namespace } }
+spec:
+  schedule: "{{ .Values.cron.schedule }}"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: { { .Values.fullnameOverride } }
+              image: { { .Values.image.repository } }
+              command: { { .Values.cron.command } }
+              volumeMounts:
+                - name: { { .Values.volumeMount.name } } # Could be array loop but for now just a single mount
+                  mountPath: { { .Values.volumeMount.path } }
+          volumes:
+            - name: { { .Values.volumeMount.name } }
+              persistentVolumeClaim:
+                claimName: { { .Values.pvc.claimName } }
+          restartPolicy: OnFailure
