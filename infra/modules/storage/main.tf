@@ -9,6 +9,6 @@ terraform {
   }
 }
 
-resource "kubernetes_manifest" "create-storage-class" {
-  manifest = yamldecode(file("${path.module}/manifests/storage-class.yml"))
+resource "kubectl_manifest" "create-storage-class" {
+  yaml_body = file("${path.module}/manifests/storage-class.yml")
 }

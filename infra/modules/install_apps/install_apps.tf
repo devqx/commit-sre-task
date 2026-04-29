@@ -8,13 +8,12 @@ terraform {
 }
 
 
-
-resource "kubernetes_manifest" "log-generator-deployment" {
-  manifest = yamldecode(file("${path.module}/apps/base/log-reader/deployment.yaml"))
+resource "kubectl_manifest" "log-generator-deployment" {
+  yaml_body = file("${path.module}/apps/base/log-reader/deployment.yaml")
 }
 
-resource "kubernetes_manifest" "log-generator-pvc" {
-  manifest = yamldecode(file("${path.module}/apps/base/log-reader/pvc.yaml"))
+resource "kubectl_manifest" "log-generator-pvc" {
+  yaml_body = file("${path.module}/apps/base/log-reader/pvc.yaml")
 }
 
 resource "helm_release" "install-log-reader-app" {

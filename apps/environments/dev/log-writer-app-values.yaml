@@ -35,28 +35,19 @@ tolerations: []
 
 affinity: {}
 
-# 🔐 Security context (optional but good practice)
 securityContext:
   runAsUser: 1000
   runAsNonRoot: true
   fsGroup: 1000
 
-# 🌐 Service (not strictly needed for logger, but harmless)
-service:
-  type: ClusterIP
-  port: 80
-
-# 🚀 Autoscaling compatibility (optional toggle)
 autoscaling:
   enabled: false
   minReplicas: 1
   maxReplicas: 2
   targetCPUUtilizationPercentage: 80
 
-# 🔄 Pod annotations (useful for ArgoCD sync waves if needed)
 podAnnotations: {}
 
-# 🧾 Extra env vars (wired into deployment template)
 env:
   - name: LOG_DIR
     value: "/data"

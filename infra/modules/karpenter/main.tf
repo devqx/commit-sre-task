@@ -21,7 +21,7 @@ resource "helm_release" "karpenter" {
   ]
 }
 
-resource "kubernetes_manifest" "create-karpenter-provisioner" {
-  manifest = yamldecode(file("${path.module}/manifests/karpenter-provisioner.yml"))
+resource "kubectl_manifest" "create-karpenter-provisioner" {
+  yaml_body = file("${path.module}/manifests/karpenter-provisioner.yml")
 }
 
