@@ -1,0 +1,12 @@
+apiVersion: karpenter.sh/v1alpha5
+kind: Provisioner
+metadata:
+  name: default
+spec:
+  requirements:
+    - key: "kubernetes.io/arch"
+      operator: In
+      values: [ "amd64" ]
+  providerRef:
+    name: default
+  ttlSecondsAfterEmpty: 30
