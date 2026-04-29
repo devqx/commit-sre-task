@@ -184,8 +184,8 @@ Reader App → reads logs → prints in web
 │
 ├── apps/
 │   ├── base/
-│   │   ├── app1/          # Reader app manifests
-│   │   └── app2/          # Logger Helm chart
+│   │   ├── log-generator-app/          # Reader app manifests
+│   │   └── log-reader/          # Logger Helm chart
 │   │
 │   ├── environments/
 │   │   └── dev/
@@ -193,8 +193,8 @@ Reader App → reads logs → prints in web
 │   └── applicationset.yaml
 │
 ├── docker/
-│   ├── app1/
-│   └── app2/
+│   ├── log-reader-app/
+│   └── log-writer-app/
 │
 └── README.md
 ```
@@ -345,7 +345,7 @@ You should see log files created by logger app.
 
 # 👨‍💻 Author
 
-**devqx**
+**Paul Oluwaseun**
 
 ---
 
