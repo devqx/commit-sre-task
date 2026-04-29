@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: logger-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: logger
+  template:
+    metadata:
+      labels:
+        app: logger
+    spec:
+      containers:
+        - name: logger
+          image: 316336724953.dkr.ecr.eu-north-1.amazonaws.com/log-reader:latest
+          command: ["python", "-u", "app.py"]
+          volumeMounts:
+            - name: efs-storage
+              mountPath: /data
+      volumes:
+        - name: efs-storage
+          persistentVolumeClaim:
+            claimName: shared-efs-pvc

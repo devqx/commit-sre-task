@@ -1,0 +1,22 @@
+name: log-generator-prod
+project: prod-project
+chart: log-generator-helm-chart
+namespace: log-generator-prod
+values: |-
+  fullnameOverride: log-generator-prod
+  image:
+    repository: busybox
+  namespace: log-generator-prod
+  cron:
+    schedule: "*/5 * * * *"
+    command: ["/bin/sh", "-c", "echo 'Log version 1' >> /mnt/efs/log.txt"]
+  volumeMount:
+    name: efs-storage
+    path: /mnt/efs/log.txt
+  pvc:
+    claimName: efs-pvc
+    storage: 3Gi
+  pv:
+    capacity:
+      storage: 5Gi
+  volumeHandle: fs:fsp
