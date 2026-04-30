@@ -12,6 +12,10 @@ resource "helm_release" "karpenter" {
   repository = "https://charts.karpenter.sh"
   chart      = "karpenter"
   namespace  = "karpenter"
+  create_namespace = true
+  reuse_values = true
+  cleanup_on_fail = true
+
 
   values = [
     templatefile("${path.module}/manifests/karpenter.yml", {

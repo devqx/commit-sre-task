@@ -14,10 +14,12 @@ app:
   maxFileSizeMB: 5
 
 # 💾 Persistent storage (EFS)
-persistence:
+pvc:
   enabled: true
-  existingClaim: shared-efs-pvc
+  claimName: shared-efs-pvc
   mountPath: /data
+  storageClassName: efs-sc
+  storage: 3Gi
 
 # 🧠 Resources (important for autoscaler decisions)
 resources:
